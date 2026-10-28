@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}BLACK BULLS — Admin Passcode Authentication{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 4rem auto; background: rgba(18, 20, 29, 0.95); border: var(--border-gold); padding: 2.5rem; border-radius: 12px; box-shadow: var(--shadow-glow); text-align: center;">
+    <h2 style="font-family: var(--font-heading); color: var(--color-gold-bright); font-size: 1.8rem; margin-bottom: 0.5rem;">
+        BLACK BULLS ADMIN ACCESS
+    </h2>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">
+        Enter the secret passcode to access CTF squad telemetry & player statistics.
+    </p>
+
+    <form action="{{ url_for('main.admin') }}" method="GET">
+        <input type="password" name="passcode" class="flag-input" placeholder="Admin Passcode" required style="width: 100%; margin-bottom: 1.25rem;">
+        <button type="submit" class="btn-grimoire-primary" style="width: 100%; justify-content: center;">
+            AUTHENTICATE 🔑
+        </button>
+    </form>
+</div>
+{% endblock %}

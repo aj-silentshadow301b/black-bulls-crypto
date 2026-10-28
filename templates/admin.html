@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}BLACK BULLS — CTF Admin Telemetry Dashboard{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <h1 style="font-family: var(--font-heading); color: var(--color-gold-bright); font-size: 2.2rem;">
+            CTF ADMIN TELEMETRY DASHBOARD
+        </h1>
+        <p style="color: var(--text-muted);">
+            Monitor active player attempts, solve rates, and squad submission logs.
+        </p>
+    </div>
+</div>
+
+<!-- Active Users Table -->
+<div style="background: rgba(18, 20, 29, 0.9); border: var(--border-gold); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+    <h3 style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1.2rem; margin-bottom: 1rem;">
+        👥 ACTIVE PLAYERS ({{ users | length }})
+    </h3>
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+        <thead>
+            <tr style="border-bottom: 1px solid rgba(212, 175, 55, 0.3); color: var(--color-gold-bright);">
+                <th style="padding: 0.75rem;">ID</th>
+                <th style="padding: 0.75rem;">USERNAME</th>
+                <th style="padding: 0.75rem;">SESSION ID</th>
+                <th style="padding: 0.75rem;">CURRENT CHAPTER</th>
+                <th style="padding: 0.75rem;">JOINED AT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                    <td style="padding: 0.75rem;">{{ u.id }}</td>
+                    <td style="padding: 0.75rem; font-weight: 600; color: var(--color-cyan);">{{ u.username }}</td>
+                    <td style="padding: 0.75rem; font-family: var(--font-mono); color: var(--text-muted);">{{ u.session_id[:16] }}...</td>
+                    <td style="padding: 0.75rem; color: var(--color-gold-bright); font-weight: 700;">CH {{ u.current_chapter }}</td>
+                    <td style="padding: 0.75rem; color: var(--text-muted);">{{ u.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Recent Flag Submission Attempts Table -->
+<div style="background: rgba(18, 20, 29, 0.9); border: var(--border-gold); padding: 1.5rem; border-radius: 10px;">
+    <h3 style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1.2rem; margin-bottom: 1rem;">
+        🎯 RECENT FLAG SUBMISSION ATTEMPTS (LAST 50)
+    </h3>
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+        <thead>
+            <tr style="border-bottom: 1px solid rgba(212, 175, 55, 0.3); color: var(--color-gold-bright);">
+                <th style="padding: 0.75rem;">TIME</th>
+                <th style="padding: 0.75rem;">USER ID</th>
+                <th style="padding: 0.75rem;">CHALLENGE ID</th>
+                <th style="padding: 0.75rem;">SUBMITTED FLAG</th>
+                <th style="padding: 0.75rem;">RESULT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in attempts %}
+                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                    <td style="padding: 0.75rem; color: var(--text-muted);">{{ a.timestamp.strftime('%H:%M:%S') }}</td>
+                    <td style="padding: 0.75rem;">User #{{ a.user_id }}</td>
+                    <td style="padding: 0.75rem; font-family: var(--font-mono);">{{ a.challenge_id }}</td>
+                    <td style="padding: 0.75rem; font-family: var(--font-mono); color: #fff;">{{ a.submitted_flag[:30] }}{% if a.submitted_flag | length > 30 %}...{% endif %}</td>
+                    <td style="padding: 0.75rem;">
+                        {% if a.is_correct %}
+                            <span style="color: var(--color-emerald); font-weight: 700;">✓ CORRECT</span>
+                        {% else %}
+                            <span style="color: var(--color-crimson); font-weight: 700;">❌ FAILED</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

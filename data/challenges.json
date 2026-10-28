@@ -1,0 +1,283 @@
+[
+  {
+    "id": "chapter-01",
+    "chapter_id": 1,
+    "title": "The Boy Born Without Mana",
+    "character": "Asta",
+    "crypto_type": "Base64 / Encoding",
+    "difficulty": "Easy",
+    "prompt": "Deep within the Anti-Magic Sword Pedestal, a glowing ancient rune transmits a double-encoded signal. Decode the layers of mana to uncover Asta's true resolve.",
+    "ciphertext": "VDBaR1NFRjdZWE4wWVY5dWIxOXRZV2RwWTE5aGJIZGhlWE5mYzNWeWNHRnpjMTk1YjNWeVgyeHBiV2wwYzMwPQ==",
+    "public_data": {
+      "encoding": "Multi-stage Base64",
+      "layers": 2
+    },
+    "hints": [
+      "Story Clue: Asta has no magic, relying on raw strength to break through outer barriers.",
+      "Technical Clue: The ciphertext string uses characters [A-Z, a-z, 0-9, +, /, =], indicative of Base64 encoding.",
+      "Method Clue: Apply Base64 decoding twice on the ciphertext string to recover the flag."
+    ],
+    "flag_hash": "e2f95c91ae902718a34f141186eef61d198425729ad95e2b0901f7d3c536635e",
+    "spell_name": "Anti-Magic Slash",
+    "spell_desc": "Cleaves through base encodings and nullifies simple magic barriers."
+  },
+  {
+    "id": "chapter-02",
+    "chapter_id": 2,
+    "title": "The Four-Leaf Grimoire",
+    "character": "Yuno",
+    "crypto_type": "Caesar Cipher",
+    "difficulty": "Easy",
+    "prompt": "Yuno has been chosen by the Legendary Four-Leaf Grimoire. The wind spirit Sylph leaves a message shifted by the sacred number of luck.",
+    "ciphertext": "SJJLE{cyrs_jsyv_piej_amrh_wtmvmx}",
+    "public_data": {
+      "clue": "The four leaves of the clover symbolize luck...",
+      "shift_hint": 4
+    },
+    "hints": [
+      "Story Clue: Look at the clover on Yuno's grimoire. How many leaves does it possess?",
+      "Technical Clue: This is a classical shift cipher. Each letter is shifted by a constant numerical offset.",
+      "Method Clue: Shift every alphabetic character backwards by 4 positions (or try Caesar key 4)."
+    ],
+    "flag_hash": "08b278425035b294aa5e6f33edea1a91b4ad6bcc7743ef41b28bcebccb630377",
+    "spell_name": "Towering Tornado",
+    "spell_desc": "Unleashes a cyclone that rotates alphabetical letters back into alignment."
+  },
+  {
+    "id": "chapter-03",
+    "chapter_id": 3,
+    "title": "Surpass Your Limits",
+    "character": "Captain Yami",
+    "crypto_type": "Vigen\u00e8re Cipher",
+    "difficulty": "Easy-Med",
+    "prompt": "Captain Yami of the Black Bulls draws his Dark Magic blade and carves a polyalphabetic code into the hideout wall. Use his ultimate motto as the key.",
+    "ciphertext": "ZNRPT{jiyq_wlzw_utrqo_ltcs_othlsql_uwipm}",
+    "public_data": {
+      "key_word": "Captain Yami's motto: SURPASS YOUR _____",
+      "key_length": 5
+    },
+    "hints": [
+      "Story Clue: What is Captain Yami's iconic phrase when facing impossible odds? 'Surpass your _____'",
+      "Technical Clue: This is a Vigen\u00e8re cipher. The secret repeating key is a 5-letter word representing Yami's motto.",
+      "Method Clue: Decrypt the Vigen\u00e8re ciphertext using the secret key word 'LIMIT'."
+    ],
+    "flag_hash": "d8fda365b5d644687b85c4894824678cd84c906e89f012faf9aadf0b93289273",
+    "spell_name": "Dark Cloaked Dimension Slash",
+    "spell_desc": "Slashes through multi-key ciphers and absorbs polyalphabetic barriers."
+  },
+  {
+    "id": "chapter-04",
+    "chapter_id": 4,
+    "title": "Sea Dragon's Cradle",
+    "character": "Noelle Silva",
+    "crypto_type": "XOR Cipher",
+    "difficulty": "Medium",
+    "prompt": "Noelle Silva's sea dragon mana oscillates in harmonic binary waves. A hex-encoded stream of water mana guards the royal family secret.",
+    "ciphertext": "1d091f090d29213624203e2a06322933103d332d3520371e2f202e3d2d290d3d36382d3e10292e3b373d24",
+    "public_data": {
+      "format": "Hex-encoded XOR stream",
+      "key_hint": "House of Silva's heritage"
+    },
+    "hints": [
+      "Story Clue: Noelle takes immense pride in her royal lineage. Which house does she belong to?",
+      "Technical Clue: The ciphertext is hex-encoded. Convert hex to raw bytes, then bitwise XOR with a repeated key.",
+      "Method Clue: Perform repeated-key XOR on the raw bytes using the key string 'ROYAL'."
+    ],
+    "flag_hash": "3b0749a4399e96ca96c5ede00999f209b68081b89c050b9e1f4942587d2ff3aa",
+    "spell_name": "Sea Dragon's Roar",
+    "spell_desc": "Fires a concentrated torrent of water that XOR-cancels hex-encoded streams."
+  },
+  {
+    "id": "chapter-05",
+    "chapter_id": 5,
+    "title": "The Hideout Assembly",
+    "character": "Black Bulls Squad",
+    "crypto_type": "Multi-encoding Pipeline",
+    "difficulty": "Medium",
+    "prompt": "Finral, Magna, and Luck have each secured one fragment of the squad contract encoded with their signature magic attributes. Reconstruct the full message.",
+    "ciphertext": "{\"finral_portal\": \"T0ZGSEF7YmxhY2tfYnVsbHNf\", \"magna_fire\": \"756e697465645f73717561645f\", \"luck_lightning\": \"obaqf_arire_oernx}\"}",
+    "public_data": {
+      "fragment_1_type": "Base64 (Finral Spatial Magic)",
+      "fragment_2_type": "Hexadecimal (Magna Fire Flame)",
+      "fragment_3_type": "ROT13 (Luck Lightning Speed)"
+    },
+    "hints": [
+      "Story Clue: Each squad member contributed a fragment using their unique magic style.",
+      "Technical Clue: Fragment 1 is Base64, Fragment 2 is Hexadecimal, and Fragment 3 is ROT13.",
+      "Method Clue: Decode fragment 1 (Base64), fragment 2 (Hex), and fragment 3 (ROT13), then concatenate them in order."
+    ],
+    "flag_hash": "38dd19792dc8ced7d0b8ffbefeab95de74114c6cc9e6b8003afbcd6053149d01",
+    "spell_name": "Bull Thrust Formation",
+    "spell_desc": "Combines multi-member spatial, fire, and lightning magic into a single strike."
+  },
+  {
+    "id": "chapter-06",
+    "chapter_id": 6,
+    "title": "Reincarnation & Hidden History",
+    "character": "Licht & The Elves",
+    "crypto_type": "Substitution Cipher",
+    "difficulty": "Medium",
+    "prompt": "An ancient elven stele written in Sephirot script has emerged. Substitute the ancient characters using frequency clues embedded in the elven lore.",
+    "ciphertext": "GYYIQ{tsctl_ktofeqkfqzogf_qfeotfz_lthiokgz_dquoe}",
+    "public_data": {
+      "substitution_sample": "a->q, b->w, c->e, d->r, e->t",
+      "lore": "The Elven Sephirot tablet uses an ancient character shift."
+    },
+    "hints": [
+      "Story Clue: The elven language uses a 1-to-1 letter mapping based on their ancestral alphabet.",
+      "Technical Clue: This is a monoalphabetic substitution cipher. Look at the public sample mapping.",
+      "Method Clue: Map the cipher alphabet back using the provided sample mapping: a->q, b->w, c->e, d->r, e->t."
+    ],
+    "flag_hash": "d3f96f8dfc1e65d234d9558095cb4cd75dc6d28b32963b21b5fc78b2357e62f9",
+    "spell_name": "Origin Flash",
+    "spell_desc": "Illuminates ancient substitution alphabets and reveals true historical texts."
+  },
+  {
+    "id": "chapter-07",
+    "chapter_id": 7,
+    "title": "Word Soul Devil",
+    "character": "Zagred",
+    "crypto_type": "Weak RSA",
+    "difficulty": "Medium-Hard",
+    "prompt": "Zagred attempts to summon word soul magic using a flawed RSA public key with a small modulus. Factor N to break his forbidden spell.",
+    "ciphertext": "[1307, 325, 325, 3000, 2790, 855, 1830, 1632, 2923, 2412, 1313, 1773, 119, 1107, 2185, 2412, 1773, 119, 1230, 2185, 2160, 745, 119, 2271, 1632, 2923, 3179, 281, 119, 1773, 1313, 2578, 3179, 745, 119, 1230, 612, 1313, 1632, 690, 1230, 1516]",
+    "public_data": {
+      "N": 3233,
+      "e": 17,
+      "type": "RSA Char-by-Char Modular Power",
+      "note": "Small modulus N can be factored easily into p and q."
+    },
+    "hints": [
+      "Story Clue: Devil magic seems infinite, but Zagred's modulus N is surprisingly small and vulnerable.",
+      "Technical Clue: Public key N = 3233, e = 17. Find prime factors p and q such that N = p * q.",
+      "Method Clue: N = 61 * 53. Calculate phi = 60 * 52 = 3120, find private exponent d = 2753, then decrypt each c^d mod N."
+    ],
+    "flag_hash": "ad117f84f2a79ec91e2b7fa866daa9e0e25b6820965fb07c81d17a4715d257e8",
+    "spell_name": "Soul Trance Dispel",
+    "spell_desc": "Factors prime moduli and dismantles devilish public key cryptosystems."
+  },
+  {
+    "id": "chapter-08",
+    "chapter_id": 8,
+    "title": "The Five-Leaf Devil Contract",
+    "character": "Liebe",
+    "crypto_type": "AES-128-CBC",
+    "difficulty": "Hard",
+    "prompt": "Liebe's devil binding contract is encrypted with symmetric AES-128-CBC. Extract the key derived from his anti-magic bond.",
+    "ciphertext": "bc48da7fbbbf13499400d77877858769fe2e75a69ecc78bc7a0a654aab3c82b7ad7daa6f40814864d7801d6cd85542f6",
+    "public_data": {
+      "algorithm": "AES-128-CBC",
+      "iv_hex": "666976655f6c6561665f636c6f766572",
+      "key_derivation_hint": "Key is 16-byte ASCII string: 'anti_magic_liebe'"
+    },
+    "hints": [
+      "Story Clue: Liebe is Asta's anti-magic devil brother. His key is built from his core identity.",
+      "Technical Clue: AES-128-CBC mode require a 16-byte key and 16-byte IV. Hex IV is provided in public data.",
+      "Method Clue: Decrypt the hex ciphertext using AES-128-CBC with Key = 'anti_magic_liebe' (16 bytes) and IV from public data."
+    ],
+    "flag_hash": "78792920ac72da9fb2db74b4fd06102429398ffb666ea1394e1f6d76b326da13",
+    "spell_name": "Demon-Slayer Black Divide",
+    "spell_desc": "Slashes through block ciphers and decrypts AES devil contracts using anti-magic."
+  },
+  {
+    "id": "chapter-09",
+    "chapter_id": 9,
+    "title": "Spade Kingdom's Shadows",
+    "character": "Dark Triad",
+    "crypto_type": "Hash Analysis & Cracking",
+    "difficulty": "Hard",
+    "prompt": "Dante, Vanica, and Zenon have sealed the underworld gates with MD5, SHA-1, and SHA-256 hashes. Identify and crack each hash to breach the dark realm.",
+    "ciphertext": "{\"dante_md5\": \"02055a7e07d8f4184aaa16a24ee428ad\", \"vanica_sha1\": \"d0776bdde1f97afc750b7e07f6f38f5ab8c743f1\", \"zenon_sha256\": \"3649aba709ebb6fae8f86babd13faf70f83f07f36c7bacaf2cbd170ad5931b1e\"}",
+    "public_data": {
+      "wordlist_hints": [
+        "Part 1: OFFHA{dark_triad_",
+        "Part 2: devil_possession_",
+        "Part 3: tree_of_qliphoth}"
+      ],
+      "note": "Reconstruct the full flag by combining Part 1 + Part 2 + Part 3 once verified."
+    },
+    "hints": [
+      "Story Clue: Each of the 3 Dark Triad members controls one hash stage of the seal.",
+      "Technical Clue: Dante uses MD5, Vanica uses SHA-1, Zenon uses SHA-256. Public data provides the exact structure.",
+      "Method Clue: Combine Part 1 (Dante) + Part 2 (Vanica) + Part 3 (Zenon) as listed in the public wordlist hints."
+    ],
+    "flag_hash": "a585545ee7ccc60957976a7934ef9442138acbc5a28d11dac857d3b8fbe3d048",
+    "spell_name": "Gravity Singularity Dispel",
+    "spell_desc": "Cracks devil hashes and collapses spatial gravity barriers."
+  },
+  {
+    "id": "chapter-10",
+    "chapter_id": 10,
+    "title": "The Flow of Ki",
+    "character": "Ryuzen Seven & Hino Country",
+    "crypto_type": "Zetten Numeric Cipher",
+    "difficulty": "Hard",
+    "prompt": "In Hino Country, Ryudo Ryuya teaches you to sense ki. An array of numerical ki coordinates conceals the secret of Zetten.",
+    "ciphertext": "[566, 503, 503, 517, 468, 874, 741, 748, 783, 790, 678, 706, 790, 832, 783, 825, 811, 860, 678, 867, 720, 825, 825, 720, 783, 678, 762, 748, 678, 727, 769, 790, 846, 678, 776, 692, 818, 825, 720, 811, 860, 888]",
+    "public_data": {
+      "formula": "Zetten Transform: E(c) = (c * 7) + 13",
+      "ki_focus": 7,
+      "ki_shift": 13,
+      "reversal_hint": "To decode character c: c = (E - 13) // 7"
+    },
+    "hints": [
+      "Story Clue: Zetten focuses ki by multiplying force and adding a directional offset.",
+      "Technical Clue: Each character ASCII value c was transformed using E(c) = (c * 7) + 13.",
+      "Method Clue: For each integer E in the array, compute c = (E - 13) // 7 and convert back to ASCII characters."
+    ],
+    "flag_hash": "16d1765403d4651d3bece405e5c680799156f5f8d5a26213685dc784201eb185",
+    "spell_name": "Zetten Infinite Strike",
+    "spell_desc": "Channels ki into integer transformations and reverses numeric affine shifts."
+  },
+  {
+    "id": "chapter-11",
+    "chapter_id": 11,
+    "title": "Soul & Time Distortion",
+    "character": "Lucius Zogratis",
+    "crypto_type": "Multi-layer Poly-Cipher",
+    "difficulty": "Very Hard",
+    "prompt": "Lucius Zogratis manipulates time and soul magic across a 3-layer cipher chain: Base64 -> XOR(key='TIME') -> Hex. Reverse time to undo his grand design.",
+    "ciphertext": "00791702070c0b7236011b2f35111b3f0c7a0333301e3523361e0b2b351e0323300e21310e1f74310d1e29350d787428360e0b76360e1b3f37787476367a07360e017d78",
+    "public_data": {
+      "pipeline": "Original Flag -> Base64 -> XOR(key='TIME') -> Hex",
+      "reversal_order": "Hex Decode -> XOR(key='TIME') -> Base64 Decode"
+    },
+    "hints": [
+      "Story Clue: Lucius controls time magic. To solve his cipher, you must move backwards through time.",
+      "Technical Clue: The pipeline was: Flag -> Base64 -> XOR with 'TIME' -> Hex string.",
+      "Method Clue: Reverse the process: Convert hex to bytes, XOR bytes with key 'TIME', then Base64 decode the resulting string."
+    ],
+    "flag_hash": "298cb56155d91bed1e2d8710f6d9cb0058ed4285cdbf32e2d2dff12e762add15",
+    "spell_name": "Chrono Stasis Shatter",
+    "spell_desc": "Rewinds cipher pipelines and shatters time-layered encryption."
+  },
+  {
+    "id": "chapter-12",
+    "chapter_id": 12,
+    "title": "The Ultimate Anti-Magic Spell",
+    "character": "Final Grimoire / Master Battle",
+    "crypto_type": "Combined Master Cipher",
+    "difficulty": "Final",
+    "prompt": "The Forbidden Grimoire unlocks its final page. Combine the 5 Master Spell Keys collected throughout your journey to break the ultimate devil seal!",
+    "ciphertext": "LjUyKR4VDTMMAgw2ASoIDQE0OB8ICgYKLRIwHwUsBwoHMywTGwYELB86AAozKwUECDYZEho=",
+    "public_data": {
+      "required_master_keys": [
+        "Ch1 key: 'asta_no_magic'",
+        "Ch3 key: 'dark_magic'",
+        "Ch7 key: 'word_soul'",
+        "Ch8 key: 'five_leaf'",
+        "Ch11 key: 'time_magic'"
+      ],
+      "combined_key_format": "ch1_key + '_' + ch3_key + '_' + ch7_key + '_' + ch8_key + '_' + ch11_key",
+      "encryption": "Base64( Flag XOR CombinedKey )"
+    },
+    "hints": [
+      "Story Clue: Recall the key spell terms unlocked in Chapters 1, 3, 7, 8, and 11.",
+      "Technical Clue: Combined key string = 'asta_no_magic' + '_' + 'dark_magic' + '_' + 'word_soul' + '_' + 'five_leaf' + '_' + 'time_magic'.",
+      "Method Clue: Base64 decode the ciphertext, then XOR the resulting bytes with the repeating Combined Key string."
+    ],
+    "flag_hash": "b2fa3c7ea6045558172df149dec54b4070c2fad761b73a794fb8737bd1086764",
+    "spell_name": "Ultimate Anti-Magic Devil Union",
+    "spell_desc": "The supreme power of the Black Bulls Grimoire. Nullifies all magic and unifies all squad spell keys."
+  }
+]

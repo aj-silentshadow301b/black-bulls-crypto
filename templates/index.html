@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}BLACK BULLS — THE CRYPTO GRIMOIRE | Enter the Journey{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <!-- Five-Leaf Clover Glowing SVG Symbol -->
+    <svg class="five-leaf-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 10 C35 10 30 30 50 45 C70 30 65 10 50 10 Z" fill="url(#goldGrad)"/>
+        <path d="M90 50 C90 35 70 30 55 50 C70 70 90 65 90 50 Z" fill="url(#goldGrad)"/>
+        <path d="M50 90 C65 90 70 70 50 55 C30 70 35 90 50 90 Z" fill="url(#goldGrad)"/>
+        <path d="M10 50 C10 65 30 70 45 50 C30 30 10 35 10 50 Z" fill="url(#goldGrad)"/>
+        <path d="M50 45 C40 35 35 50 50 55 C65 50 60 35 50 45 Z" fill="#8A2BE2"/>
+        <circle cx="50" cy="50" r="6" fill="#FFD700" />
+        <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD700" />
+                <stop offset="100%" stop-color="#AA7C11" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <h1 class="hero-title">BLACK BULLS</h1>
+    <h2 class="hero-subtitle">THE CRYPTO GRIMOIRE</h2>
+    
+    <p class="hero-tagline">
+        "A forbidden Grimoire has opened. The magic knights of the Black Bulls call upon your mind to break ancient cipher seals."
+    </p>
+
+    <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem;">
+        <a href="{{ url_for('main.intro') }}" class="btn-grimoire-primary" id="btn-enter-journey">
+            <span>ENTER THE JOURNEY</span> ⚔️
+        </a>
+
+        <a href="{{ url_for('main.grimoire') }}" class="btn-grimoire-secondary">
+            <span>GRIMOIRE MAP</span> 📖
+        </a>
+    </div>
+
+    <!-- Stats Pill -->
+    <div style="margin-top: 3.5rem; display: flex; gap: 2rem; background: rgba(18, 20, 29, 0.8); padding: 1rem 2rem; border-radius: 30px; border: var(--border-gold);">
+        <div>
+            <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">PROGRESS</span>
+            <strong style="color: var(--color-gold-bright); font-size: 1.2rem;">{{ stats.solved_count }} / 12 CHAPTERS</strong>
+        </div>
+        <div style="border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2rem;">
+            <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">SCORE</span>
+            <strong style="color: var(--color-cyan); font-size: 1.2rem;">{{ stats.total_score }} PTS</strong>
+        </div>
+        <div style="border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2rem;">
+            <span style="color: var(--text-muted); font-size: 0.85rem; display: block;">SPELLS AWAKENED</span>
+            <strong style="color: var(--color-purple); font-size: 1.2rem;">{{ stats.spells_count }} SPELLS</strong>
+        </div>
+    </div>
+</section>
+{% endblock %}

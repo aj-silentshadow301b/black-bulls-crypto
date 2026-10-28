@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap');
+
+:root {
+    --bg-dark: #07080c;
+    --bg-card: rgba(18, 20, 29, 0.85);
+    --bg-parchment: rgba(26, 22, 18, 0.92);
+    
+    --color-gold: #d4af37;
+    --color-gold-bright: #ffd700;
+    --color-gold-glow: rgba(255, 215, 0, 0.4);
+    
+    --color-purple: #8a2be2;
+    --color-purple-dark: #4a0e4e;
+    --color-purple-glow: rgba(138, 43, 226, 0.5);
+    
+    --color-blue: #1e90ff;
+    --color-cyan: #4deeea;
+    --color-emerald: #20b2aa;
+    --color-crimson: #dc143c;
+    --color-pink: #ff007f;
+    
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-gold: #f6e05e;
+    
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-mono: 'Fira Code', monospace;
+    
+    --border-gold: 1px solid rgba(212, 175, 55, 0.4);
+    --border-purple: 1px solid rgba(138, 43, 226, 0.4);
+    
+    --shadow-glow: 0 0 25px rgba(212, 175, 55, 0.25);
+    --shadow-purple-glow: 0 0 30px rgba(138, 43, 226, 0.35);
+    --shadow-crimson-glow: 0 0 30px rgba(220, 20, 60, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Background Canvas */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Container & Navbar */
+.app-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.grimoire-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    background: rgba(7, 8, 12, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px var(--color-gold-glow);
+}
+
+.brand-logo span {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-gold-bright);
+    background: rgba(212, 175, 55, 0.1);
+    text-shadow: 0 0 8px var(--color-gold-glow);
+}
+
+/* Controls Header */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sound-toggle-btn {
+    background: rgba(212, 175, 55, 0.1);
+    border: var(--border-gold);
+    color: var(--color-gold-bright);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.sound-toggle-btn:hover {
+    background: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 15px var(--color-gold-glow);
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Footer */
+.grimoire-footer {
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    background: rgba(7, 8, 12, 0.9);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.grimoire-footer span {
+    color: var(--color-gold);
+    font-weight: 600;
+}

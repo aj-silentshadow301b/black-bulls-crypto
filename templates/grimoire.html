@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}BLACK BULLS — Grimoire World Map{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <h1 style="font-family: var(--font-heading); color: var(--color-gold-bright); font-size: 2.2rem; letter-spacing: 2px;">
+            THE BLACK BULLS GRIMOIRE HUB
+        </h1>
+        <p style="color: var(--text-muted);">
+            Navigate through the 12 forbidden chapters. Break each cipher seal to restore Grimoire pages.
+        </p>
+    </div>
+
+    <div style="display: flex; gap: 1rem; align-items: center;">
+        <button class="btn-grimoire-secondary" id="btn-reset-journey" type="button" style="font-size: 0.85rem; padding: 0.5rem 1rem; border-color: rgba(220, 20, 60, 0.5); color: #ff6b6b;">
+            🔄 RESET JOURNEY
+        </button>
+    </div>
+</div>
+
+<!-- Progress Meter -->
+<div style="background: rgba(18, 20, 29, 0.9); border: var(--border-gold); padding: 1.25rem 2rem; border-radius: 10px; margin-bottom: 2rem; box-shadow: var(--shadow-glow);">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span style="font-family: var(--font-heading); color: var(--color-gold); font-weight: 700;">GRIMOIRE RESTORATION PROGRESS</span>
+        <span style="color: var(--color-gold-bright); font-weight: 700;">{{ stats.solved_count }} / 12 CHAPTERS</span>
+    </div>
+    <div style="width: 100%; height: 12px; background: rgba(0, 0, 0, 0.6); border-radius: 6px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.3);">
+        <div style="width: {{ (stats.solved_count / 12) * 100 }}%; height: 100%; background: linear-gradient(90deg, #d4af37, #20b2aa); transition: width 0.6s ease;"></div>
+    </div>
+</div>
+
+<!-- 12-Chapter World Node Grid -->
+<div class="map-grid-container">
+    {% for item in progress %}
+        {% set ch_num = item.chapter_id %}
+        {% set is_sealed = item.status == 'sealed' %}
+        {% set is_solved = item.status == 'solved' %}
+        {% set is_unlocked = item.status == 'unlocked' %}
+        
+        <div class="chapter-node-card {{ item.status }}" id="chapter-card-{{ ch_num }}">
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="node-number">CHAPTER {{ "%02d" % ch_num }}</span>
+                    <span class="status-badge {{ item.status }}">
+                        {% if is_solved %}✓ RESTORED{% elif is_unlocked %}UNLOCKED{% else %}🔒 SEALED{% endif %}
+                    </span>
+                </div>
+
+                {% if ch_num == 1 %}
+                    <h3 class="node-title">Asta — Base64</h3>
+                    <div class="node-character">Anti-Magic Sword Pedestal</div>
+                {% elif ch_num == 2 %}
+                    <h3 class="node-title">Yuno — Caesar</h3>
+                    <div class="node-character">Four-Leaf Wind Spirit</div>
+                {% elif ch_num == 3 %}
+                    <h3 class="node-title">Yami — Vigenère</h3>
+                    <div class="node-character">Dark Magic Katana</div>
+                {% elif ch_num == 4 %}
+                    <h3 class="node-title">Noelle — XOR</h3>
+                    <div class="node-character">Sea Dragon's Cradle</div>
+                {% elif ch_num == 5 %}
+                    <h3 class="node-title">Black Bulls — Assembly</h3>
+                    <div class="node-character">Multi-Encoding Pipeline</div>
+                {% elif ch_num == 6 %}
+                    <h3 class="node-title">Elves — Substitution</h3>
+                    <div class="node-character">Sephirot Ancient Stele</div>
+                {% elif ch_num == 7 %}
+                    <h3 class="node-title">Zagred — Weak RSA</h3>
+                    <div class="node-character">Word Soul Devil</div>
+                {% elif ch_num == 8 %}
+                    <h3 class="node-title">Liebe — AES-128</h3>
+                    <div class="node-character">Five-Leaf Devil Contract</div>
+                {% elif ch_num == 9 %}
+                    <h3 class="node-title">Dark Triad — Hashes</h3>
+                    <div class="node-character">Tree of Qliphoth</div>
+                {% elif ch_num == 10 %}
+                    <h3 class="node-title">Hino — Zetten Cipher</h3>
+                    <div class="node-character">Flow of Ki Transformation</div>
+                {% elif ch_num == 11 %}
+                    <h3 class="node-title">Lucius — Poly-Cipher</h3>
+                    <div class="node-character">Chrono Time Distortion</div>
+                {% elif ch_num == 12 %}
+                    <h3 class="node-title">Final Grimoire — Master</h3>
+                    <div class="node-character">Ultimate Devil Union</div>
+                {% endif %}
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                {% if not is_sealed %}
+                    <a href="{{ url_for('main.chapter_story', chapter_id=ch_num) }}" class="btn-grimoire-primary" style="width: 100%; justify-content: center; padding: 0.65rem; font-size: 0.9rem;">
+                        {% if is_solved %}REPLAY STORY 📖{% else %}ENTER CHAPTER ⚔️{% endif %}
+                    </a>
+                {% else %}
+                    <button class="btn-grimoire-secondary" disabled style="width: 100%; justify-content: center; opacity: 0.5; font-size: 0.85rem; padding: 0.65rem;">
+                        SEALED BY MAGIC 🔒
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

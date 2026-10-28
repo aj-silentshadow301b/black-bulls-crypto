@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}BLACK BULLS — Story Intro Cutscene{% endblock %}
+
+{% block content %}
+<div class="dialogue-container" id="intro-cutscene-card" style="margin-top: 3rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 0.75rem; margin-bottom: 1.5rem;">
+        <span class="speaker-tag" id="speaker-name">Narrator</span>
+        <a href="{{ url_for('main.chapter_story', chapter_id=1) }}" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 600;">
+            SKIP CINEMATIC ⏩
+        </a>
+    </div>
+
+    <div class="dialogue-text" id="dialogue-text-body">
+        Loading magic cutscene...
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.25rem;">
+        <button class="btn-grimoire-secondary" id="btn-prev-scene" type="button" style="display: none;">
+            ◀ PREVIOUS
+        </button>
+        
+        <button class="btn-grimoire-primary" id="btn-next-scene" type="button" style="margin-left: auto;">
+            CONTINUE ▶
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const introScenes = [
+        {
+            speaker: "Narrator",
+            text: "In a world where magic determines wealth, status, and destiny... one boy was born with absolutely zero mana. His name is Asta."
+        },
+        {
+            speaker: "Asta",
+            text: "Even without magic, I will never give up! I am going to become the WIZARD KING!"
+        },
+        {
+            speaker: "Narrator",
+            text: "During the Grimoire Acceptance Ceremony, a mysterious tattered book enveloped in dark anti-magic flames chose Asta. It was the Five-Leaf Grimoire."
+        },
+        {
+            speaker: "Captain Yami Sukehiro",
+            text: "Brat, you're interesting. Welcome to the Black Bulls! Right here, right now... SURPASS YOUR LIMITS!"
+        },
+        {
+            speaker: "Grimoire Lore",
+            text: "A series of 12 ancient forbidden cipher seals has surfaced across the kingdom. Only by breaking each cryptographic barrier can you awaken the ultimate anti-magic spells."
+        }
+    ];
+
+    if (window.storyEngine) {
+        window.storyEngine.initCutscene(introScenes);
+        document.getElementById('btn-next-scene').addEventListener('click', () => {
+            if (window.storyEngine.currentSceneIdx < introScenes.length - 1) {
+                window.storyEngine.nextScene();
+            } else {
+                window.location.href = "{{ url_for('main.chapter_story', chapter_id=1) }}";
+            }
+        });
+        document.getElementById('btn-prev-scene').addEventListener('click', () => {
+            window.storyEngine.prevScene();
+        });
+    }
+});
+</script>
+{% endblock %}

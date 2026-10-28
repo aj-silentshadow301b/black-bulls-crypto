@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}Chapter {{ "%02d" % chapter_id }} CTF Challenge — {{ challenge.title }}{% endblock %}
+
+{% block content %}
+<div class="challenge-header" style="background: rgba(18, 20, 29, 0.95); border: var(--border-gold); padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <span style="font-family: var(--font-heading); color: var(--color-gold); font-size: 0.85rem; letter-spacing: 2px;">
+            CHAPTER {{ "%02d" % chapter_id }} &bull; {{ challenge.difficulty }} DIFFICULTY
+        </span>
+        <h1 style="font-family: var(--font-heading); color: var(--color-gold-bright); font-size: 2rem;">
+            {{ challenge.title }}
+        </h1>
+        <div style="color: var(--color-cyan); font-weight: 600; font-size: 0.95rem;">
+            TECHNIQUE: {{ challenge.crypto_type }}
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; align-items: center;">
+        <a href="{{ url_for('main.chapter_story', chapter_id=chapter_id) }}" class="btn-grimoire-secondary" style="font-size: 0.85rem;">
+            📖 REPLAY STORY
+        </a>
+        <a href="{{ url_for('main.grimoire') }}" class="btn-grimoire-secondary" style="font-size: 0.85rem;">
+            🗺️ MAP
+        </a>
+    </div>
+</div>
+
+<div class="challenge-layout">
+    <!-- LEFT: Story Context & Investigation Panel -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Narrative Context Card -->
+        <div style="background: var(--bg-parchment); border: 1px solid var(--color-gold); border-radius: 12px; padding: 1.75rem; box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+            <h3 style="font-family: var(--font-heading); color: var(--color-gold-bright); font-size: 1.2rem; margin-bottom: 0.75rem;">
+                📜 NARRATIVE PROMPT
+            </h3>
+            <p style="color: #f1f5f9; line-height: 1.7; font-size: 1.05rem;">
+                {{ challenge.prompt }}
+            </p>
+        </div>
+
+        <!-- Investigation Items Card -->
+        <div style="background: rgba(15, 17, 24, 0.95); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 1.75rem;">
+            <h3 style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1.15rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🔍</span> INVESTIGATION CLUES & PUBLIC DATA
+            </h3>
+            
+            {% set pub_data = challenge.get_public_data() %}
+            {% if pub_data %}
+                <div style="background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(212, 175, 55, 0.2); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <strong style="color: var(--color-cyan); font-size: 0.85rem; display: block; margin-bottom: 0.5rem; text-transform: uppercase;">
+                        PUBLIC CRYPTO PARAMETERS:
+                    </strong>
+                    <pre style="color: #a7f3d0; font-family: var(--font-mono); font-size: 0.85rem; white-space: pre-wrap; word-break: break-all;">{{ pub_data | tojson(indent=2) }}</pre>
+                </div>
+            {% endif %}
+
+            {% if story and story.investigation %}
+                {% for inv in story.investigation %}
+                    <div style="background: rgba(0, 0, 0, 0.5); border-left: 3px solid var(--color-gold); padding: 0.85rem 1rem; border-radius: 4px; margin-bottom: 0.75rem;">
+                        <strong style="color: var(--color-gold-bright); font-size: 0.9rem; display: block;">
+                            {{ inv.title }}
+                        </strong>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
+                            {{ inv.content }}
+                        </p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- RIGHT: Coded Grimoire Page Artifact & Answer Submission -->
+    <div class="grimoire-artifact-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="artifact-title">ENCRYPTED GRIMOIRE PAGE</h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.5); padding: 0.25rem 0.6rem; border-radius: 4px;">
+                SPELL TARGET: {{ challenge.spell_name }}
+            </span>
+        </div>
+
+        <!-- Ciphertext Block -->
+        <div>
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem; font-weight: 600;">
+                CIPHERTEXT ARTIFACT:
+            </label>
+            <div class="ciphertext-display">
+                <button type="button" class="copy-btn" id="btn-copy-ciphertext">COPY 📋</button>
+                <span id="ciphertext-raw">{{ challenge.ciphertext }}</span>
+            </div>
+        </div>
+
+        <!-- Submission Status Message -->
+        <div id="submission-status-msg" style="min-height: 24px; font-weight: 600; font-size: 0.95rem;"></div>
+
+        <!-- Flag Input Form -->
+        <form id="flag-submit-form">
+            <label style="font-size: 0.85rem; color: var(--color-gold); display: block; margin-bottom: 0.4rem; font-weight: 600;">
+                ENTER FLAG SOLUTION (OFFHA{...}):
+            </label>
+            <div class="flag-input-group">
+                <input type="text" class="flag-input" id="flag-input-field" placeholder="OFFHA{...}" required autocomplete="off">
+                <button type="submit" class="btn-cast-spell" id="btn-submit-flag">
+                    CAST SPELL 🔮
+                </button>
+            </div>
+        </form>
+
+        <!-- 3-Tier Progressive Hint Accordion -->
+        <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.25rem;">
+            <h4 style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1rem; margin-bottom: 0.75rem;">
+                💡 3-TIER HINT INVESTIGATION
+            </h4>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                {% for idx in range(1, 4) %}
+                    {% set is_unlocked = idx in hints_used %}
+                    <div>
+                        <button type="button" class="btn-grimoire-secondary" id="btn-hint-{{ idx }}" 
+                                style="width: 100%; justify-content: space-between; font-size: 0.85rem; padding: 0.6rem 1rem;"
+                                onclick="window.challengeEngine.requestHint({{ idx }})">
+                            <span>HINT {{ idx }}: {% if idx == 1 %}Story Clue{% elif idx == 2 %}Technical Clue{% else %}Method Direction{% endif %}</span>
+                            <span>{% if is_unlocked %}UNLOCKED ✓{% else %}UNLOCK 🔓{% endif %}</span>
+                        </button>
+                        <div id="hint-content-{{ idx }}" style="display: {% if is_unlocked %}block{% else %}none{% endif %}; background: rgba(0, 0, 0, 0.6); border-left: 3px solid var(--color-gold-bright); padding: 0.85rem 1rem; margin-top: 0.4rem; border-radius: 4px; color: var(--text-gold); font-size: 0.88rem;">
+                            <!-- Hint text injected via JS -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Spell Unlock Overlay Modal -->
+<div class="spell-unlock-modal" id="spell-unlock-modal">
+    <div class="magic-circle-ring">
+        <svg viewBox="0 0 100 100" style="width: 120px; height: 120px; fill: var(--color-gold-bright);">
+            <path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z"/>
+        </svg>
+    </div>
+
+    <div style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1.2rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.5rem;">
+        SEAL BROKEN &bull; NEW SPELL AWAKENED!
+    </div>
+
+    <h2 class="unlocked-spell-title" id="unlocked-spell-title">Anti-Magic Slash</h2>
+    <p class="unlocked-spell-desc" id="unlocked-spell-desc">Cleaves through base encodings and nullifies outer magic barriers.</p>
+
+    <button class="btn-grimoire-primary" id="btn-proceed-next-ch" type="button" style="font-size: 1.1rem; padding: 0.9rem 2.5rem;">
+        PROCEED TO NEXT CHAPTER ⚔️
+    </button>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.challengeEngine) {
+        window.challengeEngine.init({{ chapter_id }});
+    }
+
+    // Load initial hints if already used
+    const unlockedHints = {{ challenge.get_hints() | tojson | safe }};
+    const hintsUsedArr = {{ hints_used | tojson | safe }};
+    hintsUsedArr.forEach(idx => {
+        const hintBox = document.getElementById(`hint-content-${idx}`);
+        if (hintBox && unlockedHints[idx - 1]) {
+            hintBox.innerText = unlockedHints[idx - 1];
+            hintBox.style.display = 'block';
+        }
+    });
+});
+</script>
+{% endblock %}

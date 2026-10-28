@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ story.title if story else 'Chapter Story' }}{% endblock %}
+
+{% block content %}
+<div id="chapter-story-container" data-chapter-id="{{ chapter_id }}" style="max-width: 950px; margin: 2rem auto;">
+    
+    <!-- Header Banner -->
+    <div style="background: rgba(18, 20, 29, 0.95); border: var(--border-gold); padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-glow);">
+        <div>
+            <span style="font-family: var(--font-heading); color: var(--color-gold); font-size: 0.9rem; letter-spacing: 2px;">
+                CHAPTER {{ "%02d" % chapter_id }} OF 12
+            </span>
+            <h1 style="font-family: var(--font-heading); color: var(--color-gold-bright); font-size: 2rem;">
+                {{ story.title }}
+            </h1>
+            <div style="color: var(--color-cyan); font-weight: 600; font-size: 0.95rem; margin-top: 0.25rem;">
+                CHARACTER: {{ story.character }}
+            </div>
+        </div>
+
+        <a href="{{ url_for('main.challenge_page', chapter_id=chapter_id) }}" class="btn-grimoire-primary" style="font-size: 0.9rem; padding: 0.75rem 1.25rem;">
+            JUMP TO CHALLENGE ⚔️
+        </a>
+    </div>
+
+    <!-- Cutscene Dialogue Box -->
+    <div class="dialogue-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 0.75rem; margin-bottom: 1.5rem;">
+            <span class="speaker-tag" id="speaker-name">Narrator</span>
+            <a href="{{ url_for('main.challenge_page', chapter_id=chapter_id) }}" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">
+                SKIP CUTSCENE ⏩
+            </a>
+        </div>
+
+        <div class="dialogue-text" id="dialogue-text-body">
+            Loading chapter narrative...
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.25rem;">
+            <button class="btn-grimoire-secondary" id="btn-prev-scene" type="button" style="display: none;">
+                ◀ PREVIOUS SCENE
+            </button>
+            
+            <a href="{{ url_for('main.challenge_page', chapter_id=chapter_id) }}" class="btn-grimoire-primary" id="btn-next-scene" style="margin-left: auto;">
+                CONTINUE ▶
+            </a>
+        </div>
+    </div>
+
+    <!-- Story Investigation Items Card -->
+    {% if story and story.investigation %}
+    <div style="background: rgba(15, 17, 24, 0.9); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; padding: 1.5rem; margin-top: 2rem;">
+        <h3 style="font-family: var(--font-heading); color: var(--color-gold); font-size: 1.1rem; margin-bottom: 1rem;">
+            🔍 INVESTIGATION EVIDENCE & LORE
+        </h3>
+        {% for inv in story.investigation %}
+            <div style="background: rgba(0, 0, 0, 0.5); border-left: 3px solid var(--color-gold); padding: 1rem; border-radius: 4px; margin-bottom: 0.75rem;">
+                <strong style="color: var(--color-gold-bright); font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">
+                    {{ inv.title }}
+                </strong>
+                <p style="color: var(--text-main); font-size: 0.9rem;">
+                    {{ inv.content }}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const rawScenes = {{ story.scenes | tojson | safe if story and story.scenes else '[]' }};
+    if (window.storyEngine && rawScenes.length > 0) {
+        window.storyEngine.initCutscene(rawScenes);
+        
+        const nextBtn = document.getElementById('btn-next-scene');
+        const prevBtn = document.getElementById('btn-prev-scene');
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                if (window.storyEngine.currentSceneIdx < rawScenes.length - 1) {
+                    e.preventDefault();
+                    window.storyEngine.nextScene();
+                }
+            });
+        }
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                window.storyEngine.prevScene();
+            });
+        }
+    }
+});
+</script>
+{% endblock %}

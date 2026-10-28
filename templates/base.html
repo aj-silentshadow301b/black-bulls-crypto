@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BLACK BULLS — THE CRYPTO GRIMOIRE{% endblock %}</title>
+    <meta name="description" content="A story-driven cryptographic CTF web application inspired by Black Bulls. Solve ciphers, unlock Grimoire spells, and conquer ancient devils.">
+    
+    <!-- CSS Design System -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/grimoire-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/particles.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- HTML5 Canvas for Dynamic Mana Particles & Magical Runes -->
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="app-container">
+        <!-- Navigation Header -->
+        <header class="grimoire-navbar">
+            <a href="{{ url_for('main.index') }}" class="brand-logo" id="brand-logo-link">
+                <span>♣</span> BLACK BULLS <span>GRIMOIRE</span>
+            </a>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('main.index') }}" class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}">Home</a></li>
+                    <li><a href="{{ url_for('main.grimoire') }}" class="nav-link {% if request.endpoint == 'main.grimoire' %}active{% endif %}">Grimoire Hub</a></li>
+                    <li><a href="{{ url_for('main.archive') }}" class="nav-link {% if request.endpoint == 'main.archive' %}active{% endif %}">Archive & Spells</a></li>
+                    <li><a href="{{ url_for('main.admin') }}" class="nav-link {% if request.endpoint == 'main.admin' %}active{% endif %}">Admin</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="sound-toggle-btn" id="sound-toggle-btn" type="button">
+                    🔊 SOUND ON
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Injection -->
+        <main class="main-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="grimoire-footer">
+            <p>BLACK BULLS — CRYPTO GRIMOIRE &bull; <span>SURPASS YOUR LIMITS</span> &bull; 2026</p>
+        </footer>
+    </div>
+
+    <!-- JS Core Engine -->
+    <script src="{{ url_for('static', filename='js/sound_engine.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/particle_engine.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/story_engine.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/challenge_engine.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
